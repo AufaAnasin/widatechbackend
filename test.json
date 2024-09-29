@@ -1,0 +1,124 @@
+{},
+// Get All Invoice
+{
+    "status_code": 200,
+    "message" : "Success",
+    "data" : [{
+        "id" : "invoice_id",
+        "customerName" : "customer_name",
+        "salespersonName" : "salesperson_name",
+        "total" : 30000, // total of all product
+        "date" : "9-20-2001",
+        "notes" : "sdadsadsa",
+        "product" : [{ // product selected by user
+            "productId" : "product_id",
+            "productPrice" : "product_price",
+            "quantity" : 2,
+            "total" : "productPrice * quantity in number",
+            "image" : "productImage"
+        },
+        {
+            "productId" : "product_id",
+            "productPrice" : "product_price",
+            "quantity" : 2,
+            "total" : "productPrice * quantity in number",
+            "image" : "productImage"
+        }
+    ]
+    }]
+},
+
+// POST Invoice 
+// Request Body
+{
+    "customerName" : "customer_name",
+    "salespersonName" : "salesperson_name",
+    "date" : "9-20-2001",
+    "notes" : "sdadsadsa",
+    "product" : [{ // product selected by user
+        "productId" : "product_id",
+        "quantity" : 2,
+    },
+    {
+        "productId" : "product_id",
+        "quantity" : 2,
+    }
+]
+}
+
+// Response 
+{
+    "status_code": 200,
+    "message" : "Success",
+    "data" : [{
+        "invoiceId" : "invoice_id",
+        "customerName" : "customer_name",
+        "salespersonName" : "salesperson_name",
+        "total" : 30000,
+        "date" : "9-20-2001",
+        "notes" : "sdadsadsa",
+        "product" : [{ // product selected by user
+            "productId" : "product_id",
+            "productPrice" : "product_price",
+            "quantity" : 2,
+            "total" : "productPrice * quantity in number",
+            "image" : "productImage"
+        },
+        {
+            "productId" : "product_id",
+            "productPrice" : "product_price",
+            "quantity" : 2,
+            "total" : "productPrice * quantity in number",
+            "image" : "productImage"
+        }
+    ]
+    }]
+},
+
+// Add Product
+// POST Add Product
+// Request body
+{
+    "name" : "product_name",
+    "stock" : 100,
+    "price": 30000,
+    "image" : "imageprice" // expected can be upload and tested 
+}
+
+// Response
+{
+    "status_code": 200,
+    "message" : "Success",
+    "data" : {
+        "productId" : "product_id",
+        "productName" : "product_name",
+        "stock" : 2,
+        "price" : "product_price",
+        "image" : "product_image"
+    }
+},
+
+// GET All Product
+// response
+{
+    "status_code": 200,
+    "message" : "Success",
+    "data" : [
+        {
+        "productId" : "product_id",
+        "productName" : "product_name",
+        "stock" : 2,
+        "price" : "product_price",
+        "image" : "product_image"
+    },
+    {
+        "productId" : "product_id",
+        "productName" : "product_name",
+        "stock" : 2,
+        "price" : "product_price",
+        "image" : "product_image"
+    }
+]
+},
+
+
