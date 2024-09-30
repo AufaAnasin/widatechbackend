@@ -136,4 +136,39 @@ router.get('/products', async (req, res) => {
     }
 });
 
+// GET Product Suggestions for Autocomplete
+router.get('/products/search', async (req, res) => {
+    const query = req.query.query || '';
+
+    try {
+        const products = await Product.findAll();
+        
+        // Filter products based on the query, matching product names that start with the input string
+        const filteredProducts = products.filter(product =>
+            product.name.toLowerCase().startsWith(query.toLowerCase())
+        );
+
+        const responseData = filteredProducts.map(product => ({
+            productId: product.id,
+            productName: product.name,
+            stock: product.stock,
+            price: product.price,
+            image: product.image
+        }));
+
+        return res.status(200).json({
+            status_code: 200,
+            message: "Success",
+            data: responseData
+        });
+    } catch (error) {
+        console.error('Error retrieving product suggestions:', error);
+        return res.status(500).json({
+            status_code: 500,
+            message: "Error retrieving product suggestions",
+            error: error.message
+        });
+    }
+});
+
 module.exports = router;
