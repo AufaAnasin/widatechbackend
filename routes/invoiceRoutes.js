@@ -53,6 +53,59 @@ router.get('/invoice', async (req, res) => {
     }
 });
 
+// GET Invoice by ID
+router.get('/invoice/:id', async (req, res) => {
+  try {
+      const invoiceId = req.params.id;
+
+      // Fetch the invoice by ID with associated products via InvoiceProduct
+      const invoice = await Invoice.findByPk(invoiceId, {
+          include: [{
+              model: InvoiceProduct,
+              include: [Product] // Ensure Product is included in InvoiceProduct
+          }]
+      });
+
+      if (!invoice) {
+          return res.status(404).json({
+              status_code: 404,
+              message: `Invoice with ID ${invoiceId} not found`,
+          });
+      }
+
+      const products = invoice.InvoiceProducts.map(ip => ({
+          productId: ip.productId,
+          productPrice: ip.Product.price,
+          quantity: ip.quantity,
+          total: ip.Product.price * ip.quantity,
+          image: ip.Product.image
+      }));
+
+      const response = {
+          id: invoice.id,
+          customerName: invoice.customerName,
+          salespersonName: invoice.salespersonName,
+          total: calculateTotal(products),
+          date: invoice.date,
+          notes: invoice.notes,
+          product: products
+      };
+
+      return res.status(200).json({
+          status_code: 200,
+          message: "Success",
+          data: response
+      });
+  } catch (error) {
+      console.error("Error fetching invoice:", error);
+      return res.status(500).json({
+          status_code: 500,
+          message: "Error fetching invoice",
+          error: error.message
+      });
+  }
+});
+
 // POST Invoice
 router.post('/invoice', async (req, res) => {
     try {
